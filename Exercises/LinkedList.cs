@@ -5,48 +5,60 @@ namespace Exercises
         public string Data;
         public ListNode Next;
 
-        public ListNode(string data, ListNode next = null) {
+        public ListNode(string data, ListNode next = null)
+        {
             this.Data = data;
             this.Next = null;
         }
     }
 
-    public class LinkedList {
+    public class LinkedList
+    {
         public ListNode Head;
 
-        public LinkedList() {
+        public LinkedList()
+        {
             Head = null;
         }
 
-        public void AddToEnd(string newData) {
+        public void AddToEnd(string newData)
+        {
             ListNode newNode = new ListNode(newData, null);
-            
-            if (Head == null) {
+
+            if (Head == null)
+            {
                 Head = newNode;
                 return;
-            } 
-            
+            }
+
             ListNode current = Head;
 
-            while (current.Next != null) {
+            while (current.Next != null)
+            {
                 current = current.Next;
             }
 
-                current.Next = newNode;
+            current.Next = newNode;
         }
-        
-        public ListNode GetNodeAt(int index) {
+
+        public ListNode GetNodeAt(int index)
+        {
             int count = 0;
 
-            if (index < 0) {
+            if (index < 0)
+            {
                 return null;
             }
-            
+
             ListNode current = Head;
-            while (count < index) {
-                if (current.Next != null) {
+            while (count < index)
+            {
+                if (current.Next != null)
+                {
                     current = current.Next;
-                } else {
+                }
+                else
+                {
                     return null;
                 }
                 count++;
@@ -55,11 +67,14 @@ namespace Exercises
             return current;
         }
 
-        public bool Find(string searchTerm) {
+        public bool Find(string searchTerm)
+        {
             ListNode current = Head;
 
-            while (current != null) {
-                if (current.Data == searchTerm) {
+            while (current != null)
+            {
+                if (current.Data == searchTerm)
+                {
                     return true;
                 }
 
@@ -73,8 +88,19 @@ namespace Exercises
         /// Returns the number of nodes in the Linked List
         /// </summary>
         /// <returns>int: count</returns>
-        public int Count() {
-            return -1;
+        public int Count()
+        {
+            ListNode currentNode = Head;
+            int nodeCounter = 1;
+
+            while (currentNode.Next != null)
+            {
+                nodeCounter++;
+                currentNode = currentNode.Next;
+            }
+
+            return nodeCounter;
+
         }
 
         /// <summary>
@@ -83,7 +109,16 @@ namespace Exercises
         /// <param name="data"></param>
         /// <returns>success: true</returns>
         public bool AddToStart(string data) {
+
+            ListNode currentNode = Head;
+
+            Head = new ListNode(data)
+            {
+                Next = currentNode
+            };
+
             return false;
+
         }
 
         /// <summary>
@@ -94,8 +129,32 @@ namespace Exercises
         /// <param name="index"></param>
         /// <returns></returns>
         public bool AddNodeAt(string data, int index) {
-            return false;
+
+            if (index < 1) return false;
+
+            ListNode currentNode = Head;
+            int counter = 0;
+
+            while (counter < index -1)
+            {
+                if (currentNode.Next == null)
+                {
+                    ListNode previousNode = new ListNode(null, null);
+                    currentNode.Next = previousNode;
+                }
+                currentNode = currentNode.Next;
+                counter++;
+            }
+
+            //node to be added
+            ListNode nodeToAdd = new ListNode(data, null)
+            {
+                Next = currentNode.Next
+            };
+            currentNode.Next = nodeToAdd;
+            return true;
         }
+        
 
         /// <summary>
         /// Delete node at index.  return false if node does not exist
@@ -103,7 +162,23 @@ namespace Exercises
         /// <param name="index"></param>
         /// <returns></returns>
         public bool DeleteNodeAt(int index) {
-            return false;
+
+            ListNode currentNode = Head;
+
+            ListNode previousNode = new ListNode (null);
+
+            int counter = 0;
+
+            while (counter < index)
+            {
+                if (currentNode.Next == null) return false;
+                if (counter == index - 1) previousNode = currentNode;
+                counter++;
+                currentNode = currentNode.Next;
+            }
+
+            previousNode.Next = currentNode.Next;
+            return true;
         }
     }
 }

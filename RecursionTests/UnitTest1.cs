@@ -54,5 +54,12 @@ namespace Tests
         public void ExponentialRecTest(int num, int pow, long ans) {
             Assert.AreEqual(ans, rc.ExponentialRec(num, pow));
         }
+
+        [Test]
+        [Ignore("Rosebud")]         
+        public void _TyAllen_102058205()
+        {
+            
+        }
     }
 }
